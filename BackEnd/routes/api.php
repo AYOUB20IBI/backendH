@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\VerifyEmailController;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Admin\UpdateAuthController;
+use App\Http\Controllers\Guest\UpdateGuestAuthController;
 use App\Http\Controllers\Admin\UsersController;
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +70,12 @@ Route::middleware(['auth:admin,guest,receptionist'])->get('/user', function () {
 
 //Update Profile Admin
 
-Route::patch('admin/update',[UpdateAuthController::class , 'update']);
+Route::put('admin/update',[UpdateAuthController::class , 'update']);
 
 
 Route::get('admin/users',[UsersController::class , 'AllUsers']);
+
+
+Route::put('user/setting/update',[UpdateGuestAuthController::class , 'store']);
+Route::post('user/deleted/account/{id}',[UpdateGuestAuthController::class , 'destroy']);
+Route::post('user/changePassword/account',[UpdateGuestAuthController::class , 'changePassword']);
