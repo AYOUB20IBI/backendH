@@ -7,19 +7,18 @@ use App\Http\Controllers\Api\RegisterUserController;
 use App\Http\Controllers\Api\VerifyEmailController;
 use Illuminate\Support\Facades\Auth;
 
+//All Controller For Authentification
 use App\Http\Controllers\Admin\UpdateAuthController;
 use App\Http\Controllers\Guest\UpdateGuestAuthController;
 use App\Http\Controllers\Admin\UsersController;
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+
+//All Controller For Rooms
+use App\Http\Controllers\RoomController;
+//All Controller For Room Food
+use App\Http\Controllers\RoomFoodController;
+//All Controller For Room Type
+use App\Http\Controllers\RoomTypeController;
+
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -79,3 +78,11 @@ Route::get('admin/users',[UsersController::class , 'AllUsers']);
 Route::put('user/setting/update',[UpdateGuestAuthController::class , 'store']);
 Route::post('user/deleted/account/{id}',[UpdateGuestAuthController::class , 'destroy']);
 Route::post('user/changePassword/account',[UpdateGuestAuthController::class , 'changePassword']);
+
+
+
+//Fetch Rooms and Room Food and Room Type
+
+Route::get('all/rooms',[RoomController::class , 'index']);
+Route::get('all/room/type',[RoomTypeController::class , 'index']);
+Route::get('all/room/food',[RoomFoodController::class , 'index']);
