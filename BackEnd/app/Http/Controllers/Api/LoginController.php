@@ -62,6 +62,32 @@ class LoginController extends Controller
     }
 
 
+    public function GoogleLogin(Request $request)
+    {
+        $data = $request->validate([
+            "email" => "required|email"
+        ]);
+
+        $guest = Guest::where('email', $data['email'])->first();
+
+        if (!$guest) {
+            return response()->json([
+                'message' => "User not found"
+            ], 404);
+        }else{
+            $token = $guest->createToken('G_Token', ['guest'])->plainTextToken;
+            $cookie = cookie('token', $token, 60 * 24); // 1 day
+            return response()->json([
+                'token' => $token,
+                'user'=>$guest,
+                'typeImg'=>'google',
+                'role'=>'user'
+            ])->withCookie($cookie);
+        }
+    }
+
+
+
     public function userDetail(){
         $user = Auth::user();
         return response()->json(

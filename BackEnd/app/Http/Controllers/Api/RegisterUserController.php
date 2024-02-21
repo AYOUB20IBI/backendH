@@ -61,4 +61,55 @@ class RegisterUserController extends Controller
 
         return $randomId;
     }
+
+
+
+    public function GoogleRegister(Request $request)
+    {
+        $data = $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'gender' => 'string',
+            'address' => 'string',
+            'date_of_birth' => 'nullable|date',
+            'phone_number' => 'string',
+            'email' => 'required|email|unique:guests,email',
+            'password' => 'string',
+            'image_profile' => 'url',
+        ]);
+
+        $randomId = $this->generateUniqueNumeroId();
+        if (!empty($data['image_profile'])) {
+            $imageUrl = $data['image_profile'];
+            $imageContents = file_get_contents($imageUrl);
+            $fileName = time() . '.' . pathinfo($imageUrl, PATHINFO_EXTENSION);
+            $filePath = 'ProfileImages/' . $fileName.'png';
+            file_put_contents(public_path($filePath), $imageContents);
+
+            $data['image_profile'] = $filePath;
+        }
+
+        $user = Guest::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'numero_ID' => $randomId,
+            'gender' => $data['gender'] ?? '',
+            'address' => $data['address'] ?? '',
+            'date_of_birth' => $data['date_of_birth'] ?? now(),
+            'phone_number' => $data['phone_number'] ?? '',
+            'email' => $data['email'],
+            'password' => $data['password'] ?? '',
+            'role' => 'user',
+            'image_profile' => $fileName ? 'ProfileImages/' . $fileName.'png' : 'ProfileImages/logoprofile.png', // Si $fileName est vide, utilisez le profil par défaut
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+        $cookie = cookie('token', $token, 60 * 24); // 1 day
+
+        return response()->json([
+            'user' => $user,
+            'message' => 'Registration successful.',
+        ])->withCookie($cookie);
+    }
+
 }

@@ -27,8 +27,12 @@ use App\Http\Controllers\RoomTypeController;
 // Routes Auth  login
 
 Route::post('login',[LoginController::class , 'login']);
-
 Route::post('register',[RegisterUserController::class , 'register']);
+//Routes Auth with Google
+Route::post('google/login',[LoginController::class , 'GoogleLogin']);
+Route::post('google/register',[RegisterUserController::class , 'GoogleRegister']);
+
+
 
 
 //email virification
@@ -50,7 +54,7 @@ Route::middleware(['auth:admin,guest,receptionist'])->get('/user', function () {
         return response()->json([
             'user' => Auth::user(),
             'message' => 'hello user',
-            'role'=>'user'
+            'role'=>'user',
         ]);
     }elseif (Auth::guard('receptionist')->check()) {
         return response()->json([
@@ -86,3 +90,6 @@ Route::post('user/changePassword/account',[UpdateGuestAuthController::class , 'c
 Route::get('all/rooms',[RoomController::class , 'index']);
 Route::get('all/room/type',[RoomTypeController::class , 'index']);
 Route::get('all/room/food',[RoomFoodController::class , 'index']);
+
+Route::get('show/room/{id}',[RoomController::class , 'ShowRoom']);
+Route::get('all/rooms/test',[RoomController::class , 'index2']);
