@@ -25,8 +25,15 @@ class UsersController extends Controller
         ]);
     }
 
-    public function create()
+    public function CountersUsers()
     {
-
+        $counterGuests=Guest::count();
+        $counterAdmins=Admin::count();
+        $counterReceptionists=Receptionist::count();
+        return response()->json([
+            'counterGuests'=> $counterGuests,
+            'counterAdmins'=> $counterAdmins,
+            'counterReceptionists'=> $counterReceptionists
+        ],200);
     }
 }

@@ -18,6 +18,8 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomFoodController;
 //All Controller For Room Type
 use App\Http\Controllers\RoomTypeController;
+//All Controller For Room status
+use App\Http\Controllers\RoomStatus;
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -78,6 +80,8 @@ Route::put('admin/update',[UpdateAuthController::class , 'update']);
 
 Route::get('admin/users',[UsersController::class , 'AllUsers']);
 
+Route::get('admin/users/counters',[UsersController::class , 'CountersUsers']);
+
 
 Route::put('user/setting/update',[UpdateGuestAuthController::class , 'store']);
 Route::post('user/deleted/account/{id}',[UpdateGuestAuthController::class , 'destroy']);
@@ -86,10 +90,11 @@ Route::post('user/changePassword/account',[UpdateGuestAuthController::class , 'c
 
 
 //Fetch Rooms and Room Food and Room Type
-
+Route::get('counters',[RoomController::class , 'CounterRooms']);
 Route::get('all/rooms',[RoomController::class , 'index']);
 Route::get('all/room/type',[RoomTypeController::class , 'index']);
 Route::get('all/room/food',[RoomFoodController::class , 'index']);
+Route::get('all/room/status',[RoomStatus::class , 'index']);
 
 Route::get('show/room/{id}',[RoomController::class , 'ShowRoom']);
 Route::get('all/rooms/test',[RoomController::class , 'index2']);
