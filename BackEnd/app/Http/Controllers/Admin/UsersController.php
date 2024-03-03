@@ -24,6 +24,27 @@ class UsersController extends Controller
             ]
         ]);
     }
+    public function AllGuests ()
+    {
+        $users = Guest::all();
+        return response()->json([
+            'guests'=>$users
+        ]);
+    }
+    public function AllAdmins ()
+    {
+        $admin = Admin::all();
+        return response()->json([
+            'admins'=>$admin,
+        ]);
+    }
+    public function AllReceptionists ()
+    {
+        $receptionist = Receptionist::all();
+        return response()->json([
+            'receptionist'=>$receptionist
+        ]);
+    }
 
     public function CountersUsers()
     {
@@ -35,5 +56,30 @@ class UsersController extends Controller
             'counterAdmins'=> $counterAdmins,
             'counterReceptionists'=> $counterReceptionists
         ],200);
+    }
+
+
+    public function  ShowUsers($numeroID)
+    {
+        $guest = Guest::where('numero_ID', $numeroID)->first();
+        $admin = Admin::where('numero_ID', $numeroID)->first();
+        $receptionist = Receptionist::where('numero_ID', $numeroID)->first();
+
+
+        if($guest){
+            return response()->json([
+                'user'=> $guest,
+            ],200);
+        }
+        if($admin){
+            return response()->json([
+                'user'=> $admin,
+            ],200);
+        }
+        if($receptionist){
+            return response()->json([
+                'user'=> $receptionist,
+            ],200);
+        }
     }
 }

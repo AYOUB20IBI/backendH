@@ -24,51 +24,54 @@ class RoomTypeController extends Controller
         ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:room_types,name',
+        ]);
+
+        if ($request->has('name')) {
+            $roomType = Room_type::create([
+                'name' => $request->name,
+            ]);
+            return response()->json(['message' => 'RoomType created successfully', 'RoomType' => $roomType], 200);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $roomType = Room_type::find($id);
+
+        if (!$roomType) {
+            return response()->json(['message' => 'RoomType not found.'], 404);
+        }
+
+        return response()->json(['RoomType' => $roomType], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $roomType = Room_type::find($id);
+
+        if (!$roomType) {
+            return response()->json(['message' => 'RoomType not found.'], 404);
+        }
+
+        $roomType->update($request->all());
+
+        return response()->json(['message' => 'RoomType updated successfully', 'RoomType' => $roomType], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $roomType = Room_type::find($id);
+
+        if (!$roomType) {
+            return response()->json(['message' => 'RoomType not found.'], 404);
+        }
+
+        $roomType->delete();
+
+        return response()->json(['message' => 'RoomType deleted successfully'], 200);
     }
 }

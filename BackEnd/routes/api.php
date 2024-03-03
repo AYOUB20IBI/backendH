@@ -19,7 +19,7 @@ use App\Http\Controllers\RoomFoodController;
 //All Controller For Room Type
 use App\Http\Controllers\RoomTypeController;
 //All Controller For Room status
-use App\Http\Controllers\RoomStatus;
+use App\Http\Controllers\RoomStatusController;
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -79,6 +79,11 @@ Route::put('admin/update',[UpdateAuthController::class , 'update']);
 
 
 Route::get('admin/users',[UsersController::class , 'AllUsers']);
+Route::get('admin/users/admins',[UsersController::class , 'AllAdmins']);
+Route::get('admin/users/guests',[UsersController::class , 'AllGuests']);
+Route::get('admin/users/receptionists',[UsersController::class , 'AllReceptionists']);
+
+Route::get('admin/users/show/{numeroID}',[UsersController::class , 'ShowUsers']);
 
 Route::get('admin/users/counters',[UsersController::class , 'CountersUsers']);
 
@@ -92,9 +97,24 @@ Route::post('user/changePassword/account',[UpdateGuestAuthController::class , 'c
 //Fetch Rooms and Room Food and Room Type
 Route::get('counters',[RoomController::class , 'CounterRooms']);
 Route::get('all/rooms',[RoomController::class , 'index']);
+
+//Type
 Route::get('all/room/type',[RoomTypeController::class , 'index']);
+Route::post('admin/room/type/create',[RoomTypeController::class , 'create']);
+Route::delete('admin/room/type/delete/{id}',[RoomTypeController::class , 'destroy']);
+Route::get('admin/room/type/show/{id}',[RoomTypeController::class , 'show']);
+
+//Food
 Route::get('all/room/food',[RoomFoodController::class , 'index']);
-Route::get('all/room/status',[RoomStatus::class , 'index']);
+Route::post('admin/room/food/create',[RoomFoodController::class , 'create']);
+Route::delete('admin/room/food/delete/{id}',[RoomFoodController::class , 'destroy']);
+Route::get('admin/room/food/show/{id}',[RoomFoodController::class , 'show']);
+
+//Status
+Route::get('all/room/status',[RoomStatusController::class , 'index']);
+Route::post('admin/room/status/create',[RoomStatusController::class , 'create']);
+Route::delete('admin/room/status/delete/{id}',[RoomStatusController::class , 'destroy']);
+Route::get('admin/room/status/show/{id}',[RoomStatusController::class , 'show']);
 
 Route::get('show/room/{id}',[RoomController::class , 'ShowRoom']);
 Route::get('all/rooms/test',[RoomController::class , 'index2']);

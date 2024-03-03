@@ -23,51 +23,54 @@ class RoomFoodController extends Controller
         ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|unique:room__food,name',
+        ]);
+
+        if (!empty($validatedData)) {
+            $roomFood = Room_Food::create([
+                'name' => $validatedData['name'],
+            ]);
+            return response()->json(['message' => 'RoomFood created successfully', 'RoomFood' => $roomFood], 200);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $roomFood = Room_Food::find($id);
+
+        if (!$roomFood) {
+            return response()->json(['message' => 'RoomFood not found.'], 404);
+        }
+
+        return response()->json(['RoomFood' => $roomFood], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $roomFood = Room_Food::find($id);
+
+        if (!$roomFood) {
+            return response()->json(['message' => 'RoomFood not found.'], 404);
+        }
+
+        $roomFood->update($request->all());
+
+        return response()->json(['message' => 'RoomFood updated successfully', 'RoomFood' => $roomFood], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $roomFood = Room_Food::find($id);
+
+        if (!$roomFood) {
+            return response()->json(['message' => 'RoomFood not found.'], 404);
+        }
+
+        $roomFood->delete();
+
+        return response()->json(['message' => 'RoomFood deleted successfully'], 200);
     }
 }
