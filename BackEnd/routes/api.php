@@ -22,26 +22,20 @@ use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\RoomStatusController;
 
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // Routes Auth  login
 
 Route::post('login',[LoginController::class , 'login']);
 Route::post('register',[RegisterUserController::class , 'register']);
+
 //Routes Auth with Google
 Route::post('google/login',[LoginController::class , 'GoogleLogin']);
 Route::post('google/register',[RegisterUserController::class , 'GoogleRegister']);
-
-
 
 
 //email virification
 Route::post('email/verify/send',[VerifyEmailController::class,'sendMail']);
 
 Route::post('email/verify',[VerifyEmailController::class,'verify'])->name('ayoub');
-
 
 
 //Data user
