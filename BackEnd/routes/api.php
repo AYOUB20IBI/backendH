@@ -110,5 +110,9 @@ Route::post('admin/room/status/create',[RoomStatusController::class , 'create'])
 Route::delete('admin/room/status/delete/{id}',[RoomStatusController::class , 'destroy']);
 Route::get('admin/room/status/show/{id}',[RoomStatusController::class , 'show']);
 
+//Room
 Route::get('show/room/{id}',[RoomController::class , 'ShowRoom']);
 Route::get('all/rooms/test',[RoomController::class , 'index2']);
+Route::post('admin/rooms/create',[RoomController::class , 'create']);
+Route::delete('admin/rooms/delete/{id}',[RoomController::class , 'destroy']);
+Route::post('admin/rooms/update/{id}',[RoomController::class , 'update']);
