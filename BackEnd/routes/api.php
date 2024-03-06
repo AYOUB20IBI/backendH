@@ -97,22 +97,25 @@ Route::get('all/room/type',[RoomTypeController::class , 'index']);
 Route::post('admin/room/type/create',[RoomTypeController::class , 'create']);
 Route::delete('admin/room/type/delete/{id}',[RoomTypeController::class , 'destroy']);
 Route::get('admin/room/type/show/{id}',[RoomTypeController::class , 'show']);
+Route::put('admin/room/type/update/{id}',[RoomTypeController::class , 'update']);
 
 //Food
 Route::get('all/room/food',[RoomFoodController::class , 'index']);
 Route::post('admin/room/food/create',[RoomFoodController::class , 'create']);
 Route::delete('admin/room/food/delete/{id}',[RoomFoodController::class , 'destroy']);
 Route::get('admin/room/food/show/{id}',[RoomFoodController::class , 'show']);
+Route::put('admin/room/food/update/{id}',[RoomFoodController::class , 'update']);
 
 //Status
 Route::get('all/room/status',[RoomStatusController::class , 'index']);
 Route::post('admin/room/status/create',[RoomStatusController::class , 'create']);
 Route::delete('admin/room/status/delete/{id}',[RoomStatusController::class , 'destroy']);
 Route::get('admin/room/status/show/{id}',[RoomStatusController::class , 'show']);
+Route::put('admin/room/status/update/{id}',[RoomStatusController::class , 'update']);
 
 //Room
 Route::get('show/room/{id}',[RoomController::class , 'ShowRoom']);
 Route::get('all/rooms/test',[RoomController::class , 'index2']);
 Route::post('admin/rooms/create',[RoomController::class , 'create']);
 Route::delete('admin/rooms/delete/{id}',[RoomController::class , 'destroy']);
-Route::post('admin/rooms/update/{id}',[RoomController::class , 'update']);
+Route::put('admin/rooms/update/{id}',[RoomController::class , 'update']);

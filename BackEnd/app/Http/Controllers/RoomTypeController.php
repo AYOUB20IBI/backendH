@@ -53,13 +53,21 @@ class RoomTypeController extends Controller
     {
         $roomType = Room_type::find($id);
 
+        $validatedata = $request->validate([
+            'name' => 'required|string|unique:room_types,name',
+        ]);
+
         if (!$roomType) {
             return response()->json(['message' => 'RoomType not found.'], 404);
         }
 
-        $roomType->update($request->all());
+        $dataUpdate =[
+            'name'=>$validatedata['name']
+        ];
 
-        return response()->json(['message' => 'RoomType updated successfully', 'RoomType' => $roomType], 200);
+        $roomType->update($dataUpdate);
+
+        return response()->json(['message' => 'RoomType updated successfully'], 200);
     }
 
     public function destroy(string $id)

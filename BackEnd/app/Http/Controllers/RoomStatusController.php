@@ -45,16 +45,25 @@ class RoomStatusController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $roomType = Room_Statuse::find($id);
+        $roomStatus = Room_Statuse::find($id);
 
-        if (!$roomType) {
-            return response()->json(['message' => 'RoomType not found.'], 404);
+        $validatedata = $request->validate([
+            'name' => 'required|string|unique:room__food,name',
+        ]);
+
+        if (!$roomStatus) {
+            return response()->json(['message' => 'RoomStatus not found.'], 404);
         }
 
-        $roomType->update($request->all());
+        $dataUpdate =[
+            'name'=>$validatedata['name']
+        ];
 
-        return response()->json(['message' => 'RoomType updated successfully', 'roomType' => $roomType], 200);
+        $roomStatus->update($dataUpdate);
+
+        return response()->json(['message' => 'RoomStatus updated successfully'], 200);
     }
+
 
     public function destroy(string $id)
     {

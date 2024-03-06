@@ -52,14 +52,24 @@ class RoomFoodController extends Controller
     {
         $roomFood = Room_Food::find($id);
 
+        $validatedata = $request->validate([
+            'name' => 'required|string|unique:room__food,name',
+        ]);
+
         if (!$roomFood) {
             return response()->json(['message' => 'RoomFood not found.'], 404);
         }
 
-        $roomFood->update($request->all());
+        $dataUpdate =[
+            'name'=>$validatedata['name']
+        ];
 
-        return response()->json(['message' => 'RoomFood updated successfully', 'RoomFood' => $roomFood], 200);
+        $roomFood->update($dataUpdate);
+
+        return response()->json(['message' => 'RoomFood updated successfully'], 200);
     }
+
+    
 
     public function destroy(string $id)
     {
