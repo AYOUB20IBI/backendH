@@ -21,6 +21,12 @@ use App\Http\Controllers\RoomTypeController;
 //All Controller For Room status
 use App\Http\Controllers\RoomStatusController;
 
+//All Controller For Hootel
+use App\Http\Controllers\HotelController;
+
+//All Controller For Services
+use App\Http\Controllers\ServiceController;
+
 
 // Routes Auth  login
 
@@ -70,7 +76,8 @@ Route::middleware(['auth:admin,guest,receptionist'])->get('/user', function () {
 //Update Profile Admin
 
 Route::put('admin/update',[UpdateAuthController::class , 'update']);
-
+Route::post('admin/deleted/account/{id}',[UpdateAuthController::class , 'destroy']);
+Route::post('admin/changePassword/account',[UpdateAuthController::class , 'changePassword']);
 
 Route::get('admin/users',[UsersController::class , 'AllUsers']);
 Route::get('admin/users/admins',[UsersController::class , 'AllAdmins']);
@@ -80,6 +87,7 @@ Route::get('admin/users/receptionists',[UsersController::class , 'AllReceptionis
 Route::get('admin/users/show/{numeroID}',[UsersController::class , 'ShowUsers']);
 
 Route::get('admin/users/counters',[UsersController::class , 'CountersUsers']);
+
 
 
 Route::put('user/setting/update',[UpdateGuestAuthController::class , 'store']);
@@ -119,3 +127,16 @@ Route::get('all/rooms/test',[RoomController::class , 'index2']);
 Route::post('admin/rooms/create',[RoomController::class , 'create']);
 Route::delete('admin/rooms/delete/{id}',[RoomController::class , 'destroy']);
 Route::put('admin/rooms/update/{id}',[RoomController::class , 'update']);
+
+
+//Hotel
+Route::get('admin/get/hotel',[HotelController::class , 'index']);
+Route::get('admin/get/hotel/show/{id}',[HotelController::class , 'show']);
+Route::post('admin/get/hotel/create',[HotelController::class , 'create']);
+Route::put('admin/get/hotel/update/{id}',[HotelController::class , 'update']);
+
+
+
+//Services
+Route::get('admin/get/services',[ServiceController::class , 'index']);
+Route::get('admin/get/service/show/{id}',[ServiceController::class , 'show']);

@@ -210,7 +210,7 @@ class RoomController extends Controller
 
         return response()->json([
             'message' => 'Room updated successfully',
-        ]);
+        ],200);
     }
 
 
