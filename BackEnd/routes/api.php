@@ -140,3 +140,5 @@ Route::put('admin/get/hotel/update/{id}',[HotelController::class , 'update']);
 //Services
 Route::get('admin/get/services',[ServiceController::class , 'index']);
 Route::get('admin/get/service/show/{id}',[ServiceController::class , 'show']);
+Route::post('admin/get/service/create',[ServiceController::class , 'create']);
+Route::delete('admin/get/service/delete/{id}',[ServiceController::class , 'destroy']);

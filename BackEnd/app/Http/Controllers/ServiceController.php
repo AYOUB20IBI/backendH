@@ -22,20 +22,42 @@ class ServiceController extends Controller
         ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'name' => 'required|string|unique:services,name',
+            'iconHtml'=>'required|string',
+            'image1' => ['required', 'image','mimes:png,jpg,jpeg,svg|max:10240'],
+            'image2' => ['required', 'image','mimes:png,jpg,jpeg,svg|max:10240'],
+            'description' => 'required|string',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+
+        if ($request->hasFile('image1')) {
+            $image1 = $request->file('image1');
+            $fileName1 = time() . '_' . uniqid() . '.' . $image1->getClientOriginalExtension();
+            $image1->move('ServicesImages/', $fileName1);
+        }
+
+        if ($request->hasFile('image2')) {
+            $image2 = $request->file('image2');
+            $fileName2 = time() . '_' . uniqid() . '.' . $image2->getClientOriginalExtension();
+            $image2->move('ServicesImages/', $fileName2);
+        }
+
+
+        $services = Service::create([
+            'name' => $validatedData['name'],
+            'iconHtml' => $validatedData['iconHtml'],
+            'image1' =>  'ServicesImages/' . $fileName1,
+            'image2' => 'ServicesImages/' . $fileName2,
+            'description' => $validatedData['description'],
+        ]);
+
+        return response()->json([
+            'message' => 'Services created successfully',
+            'services' => $services
+        ]);
     }
 
     public function show($id)
@@ -70,8 +92,16 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Service $service)
+    public function destroy(string $id)
     {
-        //
+        $service = Service::find($id);
+
+        if (!$service) {
+            return response()->json(['message' => 'service not found.'], 404);
+        }
+
+        $service->delete();
+
+        return response()->json(['message' => 'service deleted successfully'], 200);
     }
 }
