@@ -73,25 +73,48 @@ class ServiceController extends Controller
         ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Service $service)
+    public function update(Request $request, string $id)
     {
-        //
+        $service = Service::find($id);
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|unique:services,name',
+            'iconHtml'=>'required|string',
+            'image1' => ['nullable', 'image','mimes:png,jpg,jpeg,svg|max:10240'],
+            'image2' => ['nullable', 'image','mimes:png,jpg,jpeg,svg|max:10240'],
+            'description' => 'required|string',
+        ]);
+
+        if (!$service) {
+            return response()->json(['message' => 'Service not found.'], 404);
+        }
+
+        $dataUpdate =[
+            'name' => $validatedData['name'],
+            'iconHtml'=>$validatedData['iconHtml'],
+            'description' => $validatedData['description'],
+        ];
+
+        if ($request->hasFile('image1')) {
+            $image1 = $request->file('image1');
+            $fileName1 = time() . '_' . uniqid() . '.' . $image1->getClientOriginalExtension();
+            $image1->move('ServicesImages/', $fileName1);
+            $dataToUpdate['image1'] = 'ServicesImages/' . $fileName1;
+        }
+
+        if ($request->hasFile('image2')) {
+            $image2 = $request->file('image2');
+            $fileName2 = time() . '_' . uniqid() . '.' . $image2->getClientOriginalExtension();
+            $image2->move('ServicesImages/', $fileName2);
+            $dataToUpdate['image2'] = 'ServicesImages/' . $fileName2;
+        }
+
+        $service->update($dataUpdate);
+
+        return response()->json(['message' => 'Service updated successfully'], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Service $service)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $service = Service::find($id);
