@@ -23,7 +23,7 @@ use App\Http\Controllers\RoomStatusController;
 
 //All Controller For Hootel
 use App\Http\Controllers\HotelController;
-
+use App\Http\Controllers\NotificationController;
 //All Controller For Services
 use App\Http\Controllers\ServiceController;
 
@@ -143,3 +143,12 @@ Route::get('admin/get/service/show/{id}',[ServiceController::class , 'show']);
 Route::post('admin/get/service/create',[ServiceController::class , 'create']);
 Route::delete('admin/get/service/delete/{id}',[ServiceController::class , 'destroy']);
 Route::put('admin/get/service/update/{id}',[ServiceController::class , 'update']);
+
+
+
+
+//Notification
+Route::get('admin/get/notifications/{adminID}',[NotificationController::class , 'showAdminNotification']);
+Route::get('guest/get/notifications/{adminID}',[NotificationController::class , 'showGuestNotification']);
+Route::post('admin/notifications/create/{adminID}',[NotificationController::class , 'create']);
+

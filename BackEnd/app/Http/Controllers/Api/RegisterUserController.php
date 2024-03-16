@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterUserRequest;
+use App\Models\Admin;
 use App\Models\Guest;
+use App\Notifications\RegisterNotification;
+use App\Notifications\WellcomGuestNotification;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
+
 
 class RegisterUserController extends Controller
 {
@@ -43,6 +48,17 @@ class RegisterUserController extends Controller
 
         $cookie = cookie('token', $token, 60 * 24); // 1 day
 
+        $admins = Admin::all();
+
+        $title="Registration Successful";
+        $message = "A new user has successfully registered. User ID: " . $user->numero_ID;
+        foreach ($admins as $admin) {
+            Notification::send($admin, new RegisterNotification($user->numero_ID,$title,$message));
+        }
+
+        $title_1="welcome";
+        $message_1 = "Welcome !! ".$user->first_name." ".$user->last_name." In Hotel Sahara.";
+        Notification::send($user, new WellcomGuestNotification($user->numero_ID,$title_1,$message_1));
 
         return response()->json([
             'user' => $user,

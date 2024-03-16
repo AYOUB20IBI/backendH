@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
 use App\Models\Guest;
+use App\Notifications\AdminNotification;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 class UpdateGuestAuthController extends Controller
 {
@@ -68,6 +71,12 @@ class UpdateGuestAuthController extends Controller
             ], 404);
         }else{
             $guest->delete();
+            $admins =Admin::all();
+            $title="Deleted Account Successful";
+            $message = "A user recently Deleted their Account. User ID: " . $guest->numero_ID;
+            foreach ($admins as $admin) {
+                Notification::send($admin, new AdminNotification($guest->numero_ID,$title,$message));
+            }
             return response()->json([
                 "message" => "Successfully deleted !"
             ],200);
@@ -89,6 +98,13 @@ class UpdateGuestAuthController extends Controller
             $guest->update([
                 'password' => Hash::make($data['password']),
             ]);
+
+            $admins =Admin::all();
+            $title="Changed Password";
+            $message = "A user recently changed their password.. User ID: " . $guest->numero_ID;
+            foreach ($admins as $admin) {
+                Notification::send($admin, new AdminNotification($guest->numero_ID,$title,$message));
+            }
 
             return response()->json([
                 "message" => "Password Changed Successfully!"
