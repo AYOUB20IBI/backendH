@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Http\Requests\Admin\UpdateProfileRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UpdateAuthController extends Controller
 {

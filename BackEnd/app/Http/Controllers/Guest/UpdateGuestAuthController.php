@@ -51,6 +51,12 @@ class UpdateGuestAuthController extends Controller
                 'phone_number' => $data['phone_number'],
                 'email' => $data['email'],
             ]);
+            $admins =Admin::all();
+            $title="Updated Account Successful";
+            $message = "A user recently Updated their Account. User ID: " . $guest->numero_ID;
+            foreach ($admins as $admin) {
+                Notification::send($admin, new AdminNotification($guest->numero_ID,$guest->numero_ID,$title,$message));
+            }
 
             return response()->json(['user'=>$guest,'image'=>$request->image_profile,'message' => 'Profile updated successfully'],200);
 
@@ -75,7 +81,7 @@ class UpdateGuestAuthController extends Controller
             $title="Deleted Account Successful";
             $message = "A user recently Deleted their Account. User ID: " . $guest->numero_ID;
             foreach ($admins as $admin) {
-                Notification::send($admin, new AdminNotification($guest->numero_ID,$title,$message));
+                Notification::send($admin, new AdminNotification($guest->numero_ID,$guest->numero_ID,$title,$message));
             }
             return response()->json([
                 "message" => "Successfully deleted !"
@@ -103,7 +109,7 @@ class UpdateGuestAuthController extends Controller
             $title="Changed Password";
             $message = "A user recently changed their password.. User ID: " . $guest->numero_ID;
             foreach ($admins as $admin) {
-                Notification::send($admin, new AdminNotification($guest->numero_ID,$title,$message));
+                Notification::send($admin, new AdminNotification($guest->numero_ID,$guest->numero_ID,$title,$message));
             }
 
             return response()->json([

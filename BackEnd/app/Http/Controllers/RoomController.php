@@ -59,10 +59,12 @@ class RoomController extends Controller
         $countRoomFoods = Room_Food::count();
 
         return response()->json([
-            'countRooms'=> $countRooms,
-            'countRoomTypes'=> $countRoomTypes,
-            'countRoomFoods'=> $countRoomFoods,
-            'countRoomStatus'=> $countRoomStatus,
+            'data'=>[
+                'countRooms'=> $countRooms,
+                'countRoomTypes'=> $countRoomTypes,
+                'countRoomFoods'=> $countRoomFoods,
+                'countRoomStatus'=> $countRoomStatus,
+            ]
         ],200);
     }
 

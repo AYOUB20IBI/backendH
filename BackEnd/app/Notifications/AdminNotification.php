@@ -12,11 +12,13 @@ class AdminNotification extends Notification
     use Queueable;
 
     private $guest_numero_ID;
+    private $admin_numero_ID;
     private $title;
     private $message;
-    public function __construct($guest_numero_ID,$title, $message)
+    public function __construct($guest_numero_ID,$admin_numero_ID,$title, $message)
     {
         $this->guest_numero_ID= $guest_numero_ID;
+        $this->admin_numero_ID= $admin_numero_ID;
         $this->title = $title;
         $this->message=$message;
     }
@@ -32,6 +34,7 @@ class AdminNotification extends Notification
     {
         return [
             'guest_numero_ID'=>$this->guest_numero_ID,
+            'admin_numero_ID'=>$this->admin_numero_ID,
             'title' => $this->title,
             'message' => $this->message
         ];

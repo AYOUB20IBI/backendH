@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UpdateAuthController;
 use App\Http\Controllers\Guest\UpdateGuestAuthController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\CreateNewAdminController;
 
 //All Controller For Rooms
 use App\Http\Controllers\RoomController;
@@ -149,6 +150,19 @@ Route::put('admin/get/service/update/{id}',[ServiceController::class , 'update']
 
 //Notification
 Route::get('admin/get/notifications/{adminID}',[NotificationController::class , 'showAdminNotification']);
-Route::get('guest/get/notifications/{adminID}',[NotificationController::class , 'showGuestNotification']);
+Route::get('guest/get/notifications/{guestID}',[NotificationController::class , 'showGuestNotification']);
+Route::get('receptionist/get/notifications/{receptionistID}',[NotificationController::class , 'showReceptionistNotification']);
+Route::get('receptionist/get/rooms/counters',[RoomController::class , 'CounterRooms']);
 Route::post('admin/notifications/create/{adminID}',[NotificationController::class , 'create']);
+
+
+Route::post('admin/notifications/create/forOneGuest/{adminID}',[NotificationController::class , 'createForOneGuest']);
+
+Route::post('admin/notifications/create/forOneReceptionist/{adminID}',[NotificationController::class , 'createForOneReceptionist']);
+
+Route::get('admin/notifications/read/{guest_ID}/{notification_id}', [NotificationController::class, 'readNotification']);
+Route::get('admin/notifications/read/admin/{admin_ID}/{notification_id}', [NotificationController::class, 'adminreadNotification']);
+
+
+//Admin : Gestion Users
 
