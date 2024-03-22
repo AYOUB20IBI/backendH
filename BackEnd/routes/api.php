@@ -12,7 +12,8 @@ use App\Http\Controllers\Admin\UpdateAuthController;
 use App\Http\Controllers\Guest\UpdateGuestAuthController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\CreateNewAdminController;
-
+use App\Http\Controllers\Admin\CreateNewResiptionistController;
+use App\Http\Controllers\Admin\CreateNewGuestController;
 //All Controller For Rooms
 use App\Http\Controllers\RoomController;
 //All Controller For Room Food
@@ -165,4 +166,14 @@ Route::get('admin/notifications/read/admin/{admin_ID}/{notification_id}', [Notif
 
 
 //Admin : Gestion Users
+Route::post('admin/user/guest/create',[CreateNewGuestController::class , 'create']);
 
+Route::post('admin/user/receptionist/create',[CreateNewResiptionistController::class , 'create']);
+
+Route::post('admin/user/admin/create',[CreateNewAdminController::class , 'create']);
+
+Route::put('admin/user/guest/update/{numero_id}/{numero_id_Admin}',[CreateNewGuestController::class , 'update']);
+
+Route::put('admin/user/receptionist/update/{numero_id}/{numero_id_Admin}',[CreateNewResiptionistController::class , 'update']);
+
+Route::put('admin/user/admin/update/{numero_id}/{numero_id_Admin}',[CreateNewAdminController::class , 'update']);

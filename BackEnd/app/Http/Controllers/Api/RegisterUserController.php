@@ -72,7 +72,7 @@ class RegisterUserController extends Controller
 
         // Check if the generated ID is unique
         while (Guest::where('numero_ID', $randomId)->exists()) {
-            $randomId = 'BI-' . mt_rand(100000, 999999);
+            $randomId = 'IBI-' . mt_rand(100000, 999999);
         }
 
         return $randomId;
