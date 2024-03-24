@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\RegisterUserController;
 use App\Http\Controllers\Api\VerifyEmailController;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\StripePaymentController;
 //All Controller For Authentification
 use App\Http\Controllers\Admin\UpdateAuthController;
 use App\Http\Controllers\Guest\UpdateGuestAuthController;
@@ -177,3 +177,11 @@ Route::put('admin/user/guest/update/{numero_id}/{numero_id_Admin}',[CreateNewGue
 Route::put('admin/user/receptionist/update/{numero_id}/{numero_id_Admin}',[CreateNewResiptionistController::class , 'update']);
 
 Route::put('admin/user/admin/update/{numero_id}/{numero_id_Admin}',[CreateNewAdminController::class , 'update']);
+
+
+
+
+
+
+//STRIPE PAYMENT
+Route::post('payment/create',[StripePaymentController::class , 'makePayment']);
