@@ -41,4 +41,10 @@ class Room extends Model
         return $this->belongsTo(Room_Food::class ,"food_id");
     }
 
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'room_number', 'room_number');
+    }
+
 }

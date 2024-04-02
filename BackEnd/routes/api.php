@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\CreateNewAdminController;
 use App\Http\Controllers\Admin\CreateNewResiptionistController;
 use App\Http\Controllers\Admin\CreateNewGuestController;
+use App\Http\Controllers\BookingController;
 //All Controller For Rooms
 use App\Http\Controllers\RoomController;
 //All Controller For Room Food
@@ -185,3 +186,10 @@ Route::put('admin/user/admin/update/{numero_id}/{numero_id_Admin}',[CreateNewAdm
 
 //STRIPE PAYMENT
 Route::post('payment/create',[StripePaymentController::class , 'makePayment']);
+
+
+
+//Booking
+
+Route::get('admin/all/bookings',[BookingController::class , 'index']);
+Route::get('admin/search/available/room',[BookingController::class , 'searchAvailableRooms']);
