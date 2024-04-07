@@ -27,6 +27,7 @@ use App\Http\Controllers\RoomStatusController;
 //All Controller For Hootel
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Receptionist\GuestsController;
 //All Controller For Services
 use App\Http\Controllers\ServiceController;
 
@@ -193,3 +194,10 @@ Route::post('payment/create',[StripePaymentController::class , 'makePayment']);
 
 Route::get('admin/all/bookings',[BookingController::class , 'index']);
 Route::get('admin/search/available/room',[BookingController::class , 'searchAvailableRooms']);
+
+
+//Receptionist : Gestion Guest
+
+Route::post('receptionist/user/guest/create/{numero_id_receptionist}',[GuestsController::class , 'create']);
+
+Route::put('receptionist/user/guest/update/{numero_id}/{numero_id_receptionist}',[GuestsController::class , 'update']);

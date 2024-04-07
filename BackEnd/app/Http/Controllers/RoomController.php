@@ -26,7 +26,8 @@ class RoomController extends Controller
 
     public function  index2()
     {
-        $rooms = Room::with('roomType','roomFood','roomStatuse')->paginate(9);
+        // $rooms = Room::with('roomType','roomFood','roomStatuse')->paginate(9);
+        $rooms = Room::with('roomType','roomFood','roomStatuse')->get();
         if (!$rooms) {
             return response()->json(['message' => 'Data not found.'], 404);
         }
